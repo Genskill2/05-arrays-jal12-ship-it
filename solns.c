@@ -33,22 +33,76 @@ float average(int A[], int n)
 		sum += A[i];
 	avg = sum/n;
 	return avg;
-}
+}	
 
 // Question 4
 int mode(int arr[], int size)
 {
-	int large = max(arr, size), largest;
-	int count[large+1];
-	count = 0;
+	int large = arr[0], largest, least = arr[0];
+	for(int i=0; i<size; i++)
+	{
+		if(large < arr[i])
+			large = arr[i];
+		if(least > arr[i])
+			least = arr[i];
+	}
+	int count[large+1], res;
+	
+	for(int i=least; i<large+2; i++)
+		count[i] = 0;
 	for(int i=0; i<size; i++)
 		count[arr[i]]++;
 	largest = count[0];
-	for(int j=0; j<large; j++)
-		if(largest < count[j])
+	for(int j=0; j<size; j++)
+		if(largest < count[arr[j]])
 		{
-			largest = count[j];
-			res = j;
+			largest = count[arr[j]];
+			res = arr[j];
 		}
 	return res;
 }
+
+    
+// Question 5
+int factors(int n,int a[])
+{
+	int count=0;
+    	int i=2;
+    	while(i<n)
+    	{
+        	if(n%i==0)
+			if(isprime(i)==1)
+			{	a[count]=i;
+				count++;
+                		n=n/i;
+                		if(isprime(n)==1)
+                		{
+                			a[count++]=n;
+                			break;
+                		}
+                		i=2;
+			}
+		else continue;
+		else
+		i++;
+	}
+	return count;
+}
+ 
+int isprime(int i)
+{
+	int flag=0;
+	for(int j=2;j<i;j++)
+	{
+		if(i%j==0)
+		{
+			flag=1;
+			break;
+		}
+	}
+	if(flag==0)
+	    return 1;
+	else
+	    return 0;
+}
+
